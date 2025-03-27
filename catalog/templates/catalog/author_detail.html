@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}
+  <title>Author Detail Page</title>
+{% endblock %}
+{%block content%}
+  <li>Name: {{author.first_name}} {{author.last_name}}</li>
+  <li>Born: {{author.date_of_birth}}</li>
+  <li>Died: {{author.date_of_death}}</li>
+  {% if user.is_staff %}
+    <a href="{% url 'author-update' author.id %}">Update</a>
+    <a href="{% url 'author-delete' author.id %}">Delete</a>
+  {% endif %}
+  {% for book in author.book_set.all %}
+    <div>
+      <a href="{{ book.get_absolute_url }}">{{book.title}}</a>
+      <p>{{book.summary}}</p>
+    </div>
+  {% endfor %}
+{%endblock%}

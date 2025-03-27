@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}
+<title>Loan List</title>
+{% endblock %}
+{% block content %}
+<h1>Loaned books: </h1>
+{% if loan_list %}
+{% for book in loan_list%}
+<p>Name: {{book.book.title}}</p>
+<p>Language: {{book.language}}</p>
+<p {% if book.is_overdue %} class="overdue" {% endif %}>Due Date: {{book.due_back}}</p>
+<p>Borrower: {{book.borrower.first_name}}</p>
+<a href="{% url 'renew-book' book.id %}">Renew</a>
+{% endfor %}
+{% else %}
+<p>No loaned books</p>
+{% endif %}
+{% endblock %}
+

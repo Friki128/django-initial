@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}
+<title>Index page</title>
+{% endblock %}
+{%block content%}
+<h1>Welcome to the library</h1>
+<p>Test application of django</p>
+<h2>Library Counts:</h2>
+<li>Books: {{num_books}}</li>
+<li>Authors: {{num_authors}}</li>
+<li>Instances: {{num_instances}}</li>
+<li>Avaible: {{num_avaible}}</li>
+<li>Genres: {{num_genres}}</li>
+<li>Martian books: {{num_martian}}</li>
+<p>Number of visits: {{num_visits}}</p>
+{%endblock%}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}
+<title>Book Detail Page</title>
+{% endblock %}
+{%block content%}
+<li>Title: {{book.title}}</li>
+<li>Author: <a href="{{book.author.get_absolute_url}}">{{book.author}}</a></li>
+<li>summary: {{book.summary}}</li>
+<li>Genres: {{book.genre.all|join:", "}}</li>
+<li>ISBN: {{book.isbn}}</li>
+{% if user.is_staff %}
+<a href="{% url 'book-update' book.isbn %}">Update</a>
+<a href="{% url 'book-delete' book.isbn %}">Delete</a>
+{% endif %}
+
+{% for instance in book.bookinstance_set.all %}
+<div>
+<p>{{instance.get_status_display}}</p>
+<p>{{instance.imprint}}</p>
+<p>{{instance.language}}</p>
+{% if instance.status != 'a' %}
+<p>It will be avaible: {{instance.due_back}}</p>
+{% endif %}
+</div>
+{% endfor %}
+{%endblock%}
