@@ -1,8 +1,13 @@
 from django.urls import path, include
 from . import views
+from rest_framework import routers
+
+router=routers.DefaultRouter()
+router.register(r'apiauthor', views.AuthorViewSet)
 
 urlpatterns = [ 
-    path('', views.index, name='index'),
+    path('', include(router.urls)),
+    path('index', views.index, name='index'),
     path('authors/', views.AuthorListView.as_view(), name='author-list'),
     path('books/', views.BookListView.as_view(), name='book-list'),
     path('author/<int:pk>', views.AuthorDetailView.as_view(), name='author-detail'),

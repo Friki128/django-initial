@@ -7,6 +7,8 @@ import datetime
 from django.urls import reverse_lazy
 from django.forms import DateInput
 from django.http import HttpResponseRedirect
+from rest_framework import viewsets
+from . import serial
 #Index mapping function
 def index(request):
 
@@ -90,6 +92,11 @@ class RenewBookView(LoginRequiredMixin, generic.edit.FormView):
         book_instance.due_back = form.cleaned_data['due_back']
         book_instance.save()
         return super().form_valid(form)
+
+class AuthorViewSet(viewsets.ModelViewSet):
+    queryset = Author.objects.all()
+    serializer_class = serial.AuthorSerializer
+
 
 class AuthorCreate(LoginRequiredMixin, PermissionRequiredMixin, generic.edit.CreateView):
     permission_required='catalog.add_author'
