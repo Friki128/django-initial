@@ -22,6 +22,9 @@ class HtmxHttpRequest(HttpRequest):
 def csrf(request):
     return JsonResponse({'csrfToken': get_token(request)})
 
+def click(request):
+    return render(request, 'click.html', {})
+
 def clicked(request: HtmxHttpRequest) -> HttpResponse:
     return render(request, 'htmx-test-clicked.html', {}) 
 

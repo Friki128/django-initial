@@ -6,6 +6,7 @@ router=routers.DefaultRouter()
 router.register(r'apiauthor', views.AuthorViewSet)
 
 urlpatterns = [
+    path('click/', views.click, name='click'),
     path('csrf/', views.csrf, name='csrf'),
     path('clicked/', views.clicked, name='clicked'),
     path('token/', obtain_auth_token),
