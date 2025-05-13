@@ -26,6 +26,7 @@ class Language(models.Model):
     #Methods
     def __str__(self):
         return self.name
+
     def get_absolute_url(self):
         return reverse('language-detail', args=[str(self.id)])
 
@@ -125,6 +126,7 @@ class BookInstance(models.Model):
         return f'{self.id}, {self.book.title}'
     def get_absolute_url(self):
         return reverse('BookInstance-detail', args=[str(self.id)])
+    
     @property 
     def is_overdue(self):
         return bool(self.due_back and date.today()>self.due_back)

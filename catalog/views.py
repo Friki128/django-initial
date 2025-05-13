@@ -1,15 +1,30 @@
+from django.middleware.csrf import get_token
 from django.shortcuts import render, get_object_or_404
+from django.utils.decorators import method_decorator
 from django.views import generic
+from rest_framework.views import csrf_exempt
 from .models import Book, BookInstance, Genre, Language, Author
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from .forms import RenewBookForm
 import datetime
 from django.urls import reverse_lazy
 from django.forms import DateInput
-from django.http import HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, JsonResponse
 from rest_framework import viewsets
 from . import serial
+import requests
 #Index mapping function
+from django_htmx.middleware import HtmxDetails
+
+class HtmxHttpRequest(HttpRequest):
+    htmx: HtmxDetails
+
+def csrf(request):
+    return JsonResponse({'csrfToken': get_token(request)})
+
+def clicked(request: HtmxHttpRequest) -> HttpResponse:
+    return render(request, 'htmx-test-clicked.html', {}) 
+
 def index(request):
 
     #Get the counts of the tables
@@ -88,6 +103,9 @@ class RenewBookView(LoginRequiredMixin, generic.edit.FormView):
         return context
 
     def form_valid(self, form):
+        captcha_token=self.request.POST['g-recaptcha-response']
+        r = requests.post('https://www.google.com/recaptcha/api/siteverify', {'secret': '6LeqpQErAAAAAFuizSA3GdmNUo6jLPg3qY8TQsFN', 'response': captcha_token})
+        print(r.json())
         book_instance = get_object_or_404(BookInstance, pk=self.kwargs['pk'])
         book_instance.due_back = form.cleaned_data['due_back']
         book_instance.save()

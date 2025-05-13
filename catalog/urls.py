@@ -1,11 +1,14 @@
 from django.urls import path, include
 from . import views
 from rest_framework import routers
-
+from rest_framework.authtoken.views import obtain_auth_token
 router=routers.DefaultRouter()
 router.register(r'apiauthor', views.AuthorViewSet)
 
-urlpatterns = [ 
+urlpatterns = [
+    path('csrf/', views.csrf, name='csrf'),
+    path('clicked/', views.clicked, name='clicked'),
+    path('token/', obtain_auth_token),
     path('', include(router.urls)),
     path('index', views.index, name='index'),
     path('authors/', views.AuthorListView.as_view(), name='author-list'),

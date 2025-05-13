@@ -15,7 +15,7 @@
     {% endif %}
   {% endif %}
 
-  <form method="post" action="{% url 'login' %}">
+  <form id="form-id" method="post" action="{% url 'login' %}">
     {% csrf_token %}
     <table>
       <tr>
@@ -27,11 +27,10 @@
         <td>{{ form.password }}</td>
       </tr>
     </table>
-    <input type="submit" value="login">
+    <input type="submit" name="submit" value="login">
     <input type="hidden" name="next" value="{{ next }}">
   </form>
 
   <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
-
 {% endblock %}
 
