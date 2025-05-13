@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
-    'django_htmx'
+    'django_htmx',
+    'django_cotton'
 ]
 
 REST_FRAMEWORK = {
