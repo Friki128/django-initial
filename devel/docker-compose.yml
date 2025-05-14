@@ -1,0 +1,32 @@
+services:
+  python:
+    image: python-test:zelda
+    command: ["/app/docker-script.sh"]
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./testSite/:/usr/src/app/
+      - ./docker-script.sh:/app/docker-script.sh
+    depends_on:
+      - postgres
+    networks:
+      - djangonetwork
+    links:
+      - postgres:postgres
+  
+
+  postgres:
+    restart: always
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_HOST: postgres
+    networks:
+      - djangonetwork
+    ports:
+      - 5432:5432
+networks:
+  djangonetwork:
+    driver: bridge

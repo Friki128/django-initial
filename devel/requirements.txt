@@ -1,0 +1,12 @@
+django~=4.2
+ipdb~=0.13.0
+ipython>=7.34.0
+debugpy>=1.6.3
+pipdeptree~=2.13.0
+psycopg2
+djangorestframework
+requests
+drf_spectacular
+django-cors-headers
+django-htmx
+django-cotton
